@@ -24,12 +24,12 @@
         <label>
             Coffee:
             <!-- placeholder shows user example input -->
-            <input type="text" name="coffee" placeholder="Black, like my soul">
+            <input type="text" name="coffee" placeholder="Black, like my soul" value="cawfee">
         </label>
         <br><br>
         <label>
             Email Address:
-            <input type="email" name="emailAddress" placeholder="doctor@who.com">
+            <input type="email" name="emailAddress" placeholder="doctor@who.com" value="me@me.com">
         </label>
         <br><br>
         <label>
@@ -48,8 +48,16 @@
         </label>
         <br><br>
         <input type="submit">
+        <input data-reset-button type="reset">
+        <!-- <button type="reset">Launch it</button> -->
+        <!-- any button inside the form tags without a type will submit the form -->
+        <!-- <button>don't launch it</button> -->
     </form>
 
+    <button data-load-orders>Load Orders!</button>
+    <section data-order-area>
+        <!-- <p></p> -->
+    </section>
     <script src="scripts/index.js"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 // ============================================
 const orderForm = document.querySelector('[data-form]');
 const notificationArea = document.querySelector('[data-notification]');
+const resetButton = document.querySelector('[data-reset-button]');
 
 // ============================================
 // Helper functions
@@ -42,7 +43,7 @@ function handleSubmit(event) {
         // && is a "falsey hunter"
         // It moves from left to right, and will stop moving
         // when it finds the first falsey expression.        
-        if (orderInfo.name && orderInfo.name === "ValidationError") {
+        if (orderInfo.name && (orderInfo.name === "ValidationError")) {
             notifyUser(`I'm sorry. Please fill out the coffee field and the email address field. Thanks. K. Byeeee.`);
         } else {
             notifyUser(`You coffee is totally (not) on its way!`);
@@ -71,8 +72,16 @@ function notifyUser(notificationText) {
     notificationArea.appendChild(notificationBox);
 }
 
+function confirmReset(e) {
+    let doesWantToReset = confirm('Really?');
+    if (!doesWantToReset) {
+        e.preventDefault();
+    }
+}
+
 // ============================================
 // Main Event Listeners
 // ============================================
 console.log('about to add event listener!');
 orderForm.addEventListener('submit', handleSubmit);
+resetButton.addEventListener('click', confirmReset);
