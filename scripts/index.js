@@ -1,4 +1,9 @@
 // ============================================
+// Constants
+// ============================================
+const API_URL = 'https://dc-coffeerun.herokuapp.com/api/coffeeOrders';
+
+// ============================================
 // DOM Selection
 // ============================================
 const orderForm = document.querySelector('[data-form]');
@@ -21,7 +26,8 @@ function handleSubmit(event) {
 	// Call fetch()
 	// pass it the URL
 	// and an object with a method and a body
-	const url = event.target.action;
+	// const url = event.target.action;
+	const url = API_URL;
 	const method = event.target.method;
 	const elements = event.target.elements;
 	const data = {
@@ -46,9 +52,9 @@ function handleSubmit(event) {
 			// It moves from left to right, and will stop moving
 			// when it finds the first falsey expression.
 			if (orderInfo.name && orderInfo.name === 'ValidationError') {
-				notifyUser(
-					`I'm sorry. Please fill out the coffee field and the email address field. Thanks. K. Byeeee.`
-				);
+				notifyUser(`I'm sorry. 
+				Please fill out the coffee field and the email address field. 
+				Thanks. K. Byeeee.`);
 			} else {
 				notifyUser(`You coffee is totally (not) on its way!`);
 			}
@@ -81,9 +87,36 @@ function confirmReset(e) {
 	}
 }
 
+// working with one coffee order
+function convertOrderToElement(orderInfo) {
+	// debugger;
+	const orderElement = document.createElement('p');
+	const orderText = `
+		  ${orderInfo.size} ${orderInfo.flavor} ${orderInfo.coffee} for ${orderInfo.emailAddress} 
+		  <br> 
+		  (${orderInfo.strength})
+	`;
+	orderElement.innerHTML = orderText;  // Danger, Will Robinson!
+	return orderElement;
+
+}
+
+// working with an array of coffee orders
+function convertArrayOfOrdersToElements(giantFrickinOrderObject) {
+	let orderArray = Object.values(giantFrickinOrderObject);
+	let elementsArray = orderArray.map(convertOrderToElement);	
+	return elementsArray;
+}
+
 function getAndShowOrders(event) {
 	console.log('hey! a click!');
 	// console.log(event);
+	fetch(API_URL) // sends a GET
+		.then(response => response.json())
+		.then(convertArrayOfOrdersToElements)
+		.then(elementsArray => {		
+			elementsArray.forEach(e => orderListingArea.appendChild(e))
+		});
 }
 
 // ============================================
