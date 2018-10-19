@@ -2,6 +2,7 @@
 // DOM Selection
 // ============================================
 const orderForm = document.querySelector('[data-form]');
+const notificationArea = document.querySelector('[data-notification]');
 
 // ============================================
 // Helper functions
@@ -35,9 +36,29 @@ function handleSubmit(event) {
         body: JSON.stringify(data)
     })
     .then(r => r.json())
-    .then(console.log)
+    .then((orderInfo) => {
+        notifyUser(`You coffee is totally (not) on its way!`);
+    }) // gotta wrap it in an anonymous function
+
     
     // debugger;
+}
+
+function notifyUser(notificationText) {
+    // create a div
+    const notificationBox = document.createElement('div');
+    // add some text content
+    notificationBox.textContent = notificationText;
+    
+    // Must check for the existence of a .firstChild
+    // otherwise, the removeChild function call will fail.
+    // if (notificationArea.firstChild) {
+    //     notificationArea.removeChild(notificationArea.firstChild);
+    // }
+    notificationArea.innerHTML = "";
+
+    // append to...something...somewhere...somehow...
+    notificationArea.appendChild(notificationBox);
 }
 
 // ============================================
