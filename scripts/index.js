@@ -37,7 +37,17 @@ function handleSubmit(event) {
     })
     .then(r => r.json())
     .then((orderInfo) => {
-        notifyUser(`You coffee is totally (not) on its way!`);
+       
+        // check the orderInfo for errors
+        // && is a "falsey hunter"
+        // It moves from left to right, and will stop moving
+        // when it finds the first falsey expression.        
+        if (orderInfo.name && orderInfo.name === "ValidationError") {
+            notifyUser(`I'm sorry. Please fill out the coffee field and the email address field. Thanks. K. Byeeee.`);
+        } else {
+            notifyUser(`You coffee is totally (not) on its way!`);
+        }
+
     }) // gotta wrap it in an anonymous function
 
     
