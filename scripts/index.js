@@ -87,9 +87,19 @@ function confirmReset(e) {
 	}
 }
 
+
+function handleCheck(event){
+	console.log('they checked');
+}
+
 // working with one coffee order
 function convertOrderToElement(orderInfo) {
 	// debugger;
+
+	const checkboxElement = document.createElement('input');
+	checkboxElement.setAttribute('type', 'checkbox');
+	checkboxElement.addEventListener('click', handleCheck);
+
 	const orderElement = document.createElement('p');
 	const orderText = `
 		  ${orderInfo.size} ${orderInfo.flavor} ${orderInfo.coffee} for ${orderInfo.emailAddress} 
@@ -97,6 +107,7 @@ function convertOrderToElement(orderInfo) {
 		  (${orderInfo.strength})
 	`;
 	orderElement.innerHTML = orderText;  // Danger, Will Robinson!
+	orderElement.appendChild(checkboxElement);
 	return orderElement;
 
 }
