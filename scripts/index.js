@@ -108,15 +108,34 @@ function convertArrayOfOrdersToElements(giantFrickinOrderObject) {
 	return elementsArray;
 }
 
+function handleError(err) {
+	console.log('you messed up chrisaquino');
+}
+
+function handleNetworkError(err) {
+	console.log('no network. boo.');
+
+	// 1. grab some old data from localStorage
+	// 2. return that data to the next .then
+	return JSON.parse(localStorage.getItem('coffee-orders'));
+}
+
 function getAndShowOrders(event) {
-	console.log('hey! a click!');
+	console.log('1. hey! a click!');
 	// console.log(event);
+	console.log('2. about to fetch!');
+	
 	fetch(API_URL) // sends a GET
 		.then(response => response.json())
+		.catch(handleNetworkError)
 		.then(convertArrayOfOrdersToElements)
 		.then(elementsArray => {		
+			console.log('4. working with the data');
 			elementsArray.forEach(e => orderListingArea.appendChild(e))
-		});
+		})
+		.catch(handleError);
+
+	console.log('3. yeah. we are fetching');
 }
 
 // ============================================
